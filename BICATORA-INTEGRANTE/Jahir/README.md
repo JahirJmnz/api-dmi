@@ -31,18 +31,18 @@
   - ISS-12: Logging simple por request.
 
 ## Tareas y estado
-- [ ] [PENDIENTE] Publicar ramas remotas: `qa` y `release` (push inicial)
+- [x] [COMPLETADO] Publicar ramas remotas: `qa` y `release` (push inicial) - **Evidencia**: `git push origin qa release` exitoso
 - [ ] [PENDIENTE] Proteger ramas `main` y `release` en GitHub (PR obligatorio + 1 review)
 - [ ] [PENDIENTE] Crear los 12 issues en GitHub (descripción, criterios, comandos `curl`, responsable)
 - [ ] [PENDIENTE] Alinear asignaciones entre guía y bitácoras individuales
-- [ ] [PENDIENTE] Actualizar `README.md` del proyecto con endpoints y ejemplos `curl`
-- [ ] [PENDIENTE] Añadir `.github/pull_request_template.md` con checklist de pruebas/review
-- [ ] [PENDIENTE] Implementar logging básico por request (`middleware.ts` con método, URL y tiempo)
-- [ ] [PENDIENTE] Agregar endpoint `GET /api/ping` (health sencillo)
-- [ ] [PENDIENTE] Validar `id` como UUID en endpoints o normalizar datos semilla a UUID
-- [ ] [PENDIENTE] ISS-09: Validaciones y errores comunes (400/404/409)
-- [ ] [PENDIENTE] ISS-10: Documentación de pruebas (README + `curl`)
-- [ ] [PENDIENTE] ISS-12: Logging simple por request
+- [x] [COMPLETADO] Actualizar `README.md` del proyecto con endpoints y ejemplos `curl` - **Evidencia**: README completo con todos los endpoints y comandos curl
+- [x] [COMPLETADO] Añadir `.github/pull_request_template.md` con checklist de pruebas/review - **Evidencia**: Archivo creado en `.github/pull_request_template.md`
+- [x] [COMPLETADO] Implementar logging básico por request (`middleware.ts` con método, URL y tiempo) - **Evidencia**: `middleware.ts` creado y funcionando
+- [x] [COMPLETADO] Agregar endpoint `GET /api/ping` (health sencillo) - **Evidencia**: `curl http://localhost:3000/api/ping` responde correctamente
+- [x] [COMPLETADO] Validar `id` como UUID en endpoints o normalizar datos semilla a UUID - **Evidencia**: IDs normalizados a UUID y validación implementada
+- [x] [COMPLETADO] ISS-09: Validaciones y errores comunes (400/404/409) - **Evidencia**: Validaciones implementadas en todos los endpoints
+- [x] [COMPLETADO] ISS-10: Documentación de pruebas (README + `curl`) - **Evidencia**: README actualizado con ejemplos curl
+- [x] [COMPLETADO] ISS-12: Logging simple por request - **Evidencia**: Middleware implementado y funcionando
 
 ## Notas
 - Los PRs deben ir primero a `qa`. Promover a `release` solo lo validado.
