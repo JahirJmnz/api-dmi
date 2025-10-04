@@ -10,13 +10,13 @@ export interface User {
 // Almacenamiento en memoria
 let users: User[] = [
   {
-    id: '1',
+    id: '550e8400-e29b-41d4-a716-446655440001',
     name: 'Juan Pérez',
     email: 'juan@email.com',
     age: 25
   },
   {
-    id: '2',
+    id: '550e8400-e29b-41d4-a716-446655440002',
     name: 'María García',
     email: 'maria@email.com',
     age: 30

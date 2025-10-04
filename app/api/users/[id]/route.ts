@@ -8,6 +8,16 @@ export async function GET(
 ) {
   try {
     const { id } = params;
+    
+    // Validar formato UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'Formato de ID inválido. Debe ser un UUID válido' },
+        { status: 400 }
+      );
+    }
+    
     const user = db.getUserById(id);
 
     if (!user) {
@@ -34,6 +44,16 @@ export async function PUT(
 ) {
   try {
     const { id } = params;
+    
+    // Validar formato UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'Formato de ID inválido. Debe ser un UUID válido' },
+        { status: 400 }
+      );
+    }
+    
     const body = await request.json();
     const { name, email, age } = body;
 
@@ -101,6 +121,15 @@ export async function DELETE(
 ) {
   try {
     const { id } = params;
+    
+    // Validar formato UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'Formato de ID inválido. Debe ser un UUID válido' },
+        { status: 400 }
+      );
+    }
     
     const deleted = db.deleteUser(id);
     

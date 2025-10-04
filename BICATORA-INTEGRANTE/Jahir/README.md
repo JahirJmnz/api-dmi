@@ -30,6 +30,20 @@
   - ISS-10: Documentación de pruebas (README + comandos `curl`).
   - ISS-12: Logging simple por request.
 
+## Tareas y estado
+- [ ] [PENDIENTE] Publicar ramas remotas: `qa` y `release` (push inicial)
+- [ ] [PENDIENTE] Proteger ramas `main` y `release` en GitHub (PR obligatorio + 1 review)
+- [ ] [PENDIENTE] Crear los 12 issues en GitHub (descripción, criterios, comandos `curl`, responsable)
+- [ ] [PENDIENTE] Alinear asignaciones entre guía y bitácoras individuales
+- [ ] [PENDIENTE] Actualizar `README.md` del proyecto con endpoints y ejemplos `curl`
+- [ ] [PENDIENTE] Añadir `.github/pull_request_template.md` con checklist de pruebas/review
+- [ ] [PENDIENTE] Implementar logging básico por request (`middleware.ts` con método, URL y tiempo)
+- [ ] [PENDIENTE] Agregar endpoint `GET /api/ping` (health sencillo)
+- [ ] [PENDIENTE] Validar `id` como UUID en endpoints o normalizar datos semilla a UUID
+- [ ] [PENDIENTE] ISS-09: Validaciones y errores comunes (400/404/409)
+- [ ] [PENDIENTE] ISS-10: Documentación de pruebas (README + `curl`)
+- [ ] [PENDIENTE] ISS-12: Logging simple por request
+
 ## Notas
 - Los PRs deben ir primero a `qa`. Promover a `release` solo lo validado.
 - Mantener visibles `CONTEXTO-GENERAL-DEL-PROYECTO/Guia-de-trabajo-y-contexto.md` y `Contexto.md`.
