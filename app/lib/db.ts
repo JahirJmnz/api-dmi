@@ -1,0 +1,81 @@
+import { randomUUID } from 'crypto';
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  age: number;
+}
+
+// Almacenamiento en memoria
+let users: User[] = [
+  {
+    id: '1',
+    name: 'Juan Pérez',
+    email: 'juan@email.com',
+    age: 25
+  },
+  {
+    id: '2',
+    name: 'María García',
+    email: 'maria@email.com',
+    age: 30
+  }
+];
+
+// Funciones CRUD
+export const db = {
+  // Obtener todos los usuarios
+  getAllUsers: (): User[] => {
+    return users;
+  },
+
+  // Obtener usuario por ID
+  getUserById: (id: string): User | undefined => {
+    return users.find(user => user.id === id);
+  },
+
+  // Crear nuevo usuario
+  createUser: (userData: Omit<User, 'id'>): User => {
+    const newUser: User = {
+      id: randomUUID(),
+      ...userData
+    };
+    users.push(newUser);
+    return newUser;
+  },
+
+  // Actualizar usuario
+  updateUser: (id: string, userData: Partial<Omit<User, 'id'>>): User | null => {
+    const userIndex = users.findIndex(user => user.id === id);
+    if (userIndex === -1) {
+      return null;
+    }
+    
+    users[userIndex] = { ...users[userIndex], ...userData };
+    return users[userIndex];
+  },
+
+  // Eliminar usuario
+  deleteUser: (id: string): boolean => {
+    const userIndex = users.findIndex(user => user.id === id);
+    if (userIndex === -1) {
+      return false;
+    }
+    
+    users.splice(userIndex, 1);
+    return true;
+  },
+
+  // Verificar si email existe
+  emailExists: (email: string, excludeId?: string): boolean => {
+    return users.some(user => 
+      user.email === email && user.id !== excludeId
+    );
+  },
+
+  // Obtener usuario por email
+  getUserByEmail: (email: string): User | undefined => {
+    return users.find(user => user.email === email);
+  }
+};
