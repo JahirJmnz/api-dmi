@@ -82,7 +82,7 @@ export const db = {
 
 
 
-export type LoanStatus = 'pending' | 'paid' | 'late';
+export type LoanStatus = 'pending' | 'paid' | 'overdue';
 
 export interface Loan {
   id: string;
