@@ -79,3 +79,33 @@ export const db = {
     return users.find(user => user.email === email);
   }
 };
+
+
+
+export type LoanStatus = 'pending' | 'paid' | 'late';
+
+export interface Loan {
+  id: string;
+  userId: string;
+  amount: number;
+  dueDate: string; // YYYY-MM-DD
+  status: LoanStatus;
+}
+
+const _loans: Loan[] = [];
+
+export const dbLoans = {
+  create: (data: Omit<Loan, 'id' | 'status'> & { status?: LoanStatus }): Loan => {
+    const loan: Loan = { id: randomUUID(), status: data.status ?? 'pending', ...data };
+    _loans.push(loan);
+    return loan;
+  },
+  findAll: (): Loan[] => [..._loans].sort(
+    (a, b) => new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime()
+  ),
+  userExists: (userId: string): boolean => {
+    // @ts-ignore: 'users' vive en este mismo módulo (sección de /api/users)
+    return Array.isArray(users) ? users.some(u => u.id === userId) : false;
+  }
+};
+
