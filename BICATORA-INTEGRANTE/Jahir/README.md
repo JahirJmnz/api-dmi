@@ -6,33 +6,37 @@
 ## Actividades realizadas
 - Inicialicé el repositorio Git y configuré ramas: `main`, `qa`, `release`.
 - Generé el proyecto base con Next.js + TypeScript + ESLint.
-- Creé el módulo `app/lib/db.ts` con almacenamiento en memoria y funciones CRUD.
-- Implementé endpoints base de la API:
-  - `GET /api/users`
-  - `POST /api/users`
-  - `GET /api/users/[id]`
-  - `PUT /api/users/[id]`
-  - `DELETE /api/users/[id]`
-- Realicé el commit inicial con la estructura funcionando localmente.
-- Mantuve y restauré archivos de contexto/guía cuando fue necesario.
+- Creé el módulo `app/lib/db.ts` con almacenamiento en memoria para API de biblioteca.
+- Implementé endpoint base:
+  - `GET /api/ping` (health check básico)
+- Reestructuré el proyecto para API de biblioteca (usuarios, libros, préstamos).
+- Creé 10 issues correctamente asignados a cada integrante con tests.
+- Actualicé documentación para reflejar API de biblioteca.
+- Configuré protección de ramas y plantillas de PR.
 
 ## Entregables creados
-- `app/lib/db.ts`
-- `app/api/users/route.ts`
-- `app/api/users/[id]/route.ts`
+- `app/lib/db.ts` (módulo de base de datos para biblioteca)
+- `app/api/ping/route.ts` (health check básico)
+- `middleware.ts` (logging de requests)
+- `.github/pull_request_template.md` (plantilla de PR)
+- `README.md` (documentación completa de API de biblioteca)
 - Configuración base (`package.json`, `tsconfig.json`, `eslint.config.mjs`, `next.config.ts`).
 
 ## Pendientes personales (siguientes)
 - Revisar PRs de compañeros y hacer merge a `qa`.
 - Seleccionar 1-2 features para promover a `release`.
 - Trabajar en:
-  - ISS-16: Documentación completa y pruebas.
+  - ISS-05: POST /api/loans (registrar préstamo)
+  - ISS-06: GET /api/loans (listar préstamos)
+  - ISS-07: PATCH /api/loans/:id/return (devolver libro)
+  - ISS-10: Documentación completa y pruebas
   - Coordinación general del equipo.
 
 ## Tareas y estado
 - [x] [COMPLETADO] Publicar ramas remotas: `qa` y `release` (push inicial) - **Evidencia**: `git push origin qa release` exitoso
 - [x] [COMPLETADO] Proteger ramas `main` y `release` en GitHub (PR obligatorio + 1 review) - **Evidencia**: Protección configurada manualmente en GitHub
-- [x] [COMPLETADO] Crear los 12 issues en GitHub (descripción, criterios, comandos `curl`, responsable) - **Evidencia**: 17 issues creados (6 completados + 11 pendientes)
+- [x] [COMPLETADO] Reestructurar proyecto para API de biblioteca - **Evidencia**: Eliminada API de usuarios, creada estructura para biblioteca
+- [x] [COMPLETADO] Crear 10 issues correctamente asignados con tests - **Evidencia**: Issues #21-30 creados y asignados a cada integrante
 - [x] [COMPLETADO] Alinear asignaciones entre guía y bitácoras individuales - **Evidencia**: Bitácoras actualizadas con nuevas asignaciones
 - [x] [COMPLETADO] Actualizar `README.md` del proyecto con endpoints y ejemplos `curl` - **Evidencia**: README completo con todos los endpoints y comandos curl
 - [x] [COMPLETADO] Añadir `.github/pull_request_template.md` con checklist de pruebas/review - **Evidencia**: Archivo creado en `.github/pull_request_template.md`
@@ -43,28 +47,24 @@
 - [x] [COMPLETADO] ISS-10: Documentación de pruebas (README + `curl`) - **Evidencia**: README actualizado con ejemplos curl
 - [x] [COMPLETADO] ISS-12: Logging simple por request - **Evidencia**: Middleware implementado y funcionando
 
-## Issues creados en GitHub (17 total)
+## Issues creados en GitHub (10 total)
 
-### ✅ COMPLETADOS (6 issues)
-- ISS-01: GET /api/ping - Health check básico
-- ISS-02: GET /api/users - Listar usuarios  
-- ISS-03: POST /api/users - Crear usuario
-- ISS-04: GET /api/users/:id - Obtener usuario
-- ISS-05: PUT /api/users/:id - Actualizar usuario
-- ISS-06: DELETE /api/users/:id - Eliminar usuario
+### ⏳ PENDIENTES (10 issues) - Asignados correctamente
+- **ISS-01**: GET /api/users - Listar usuarios (@Jairhc2)
+- **ISS-02**: POST /api/users - Crear usuario (@Jairhc2)
+- **ISS-03**: GET /api/books - Listar libros (@Imamtz0104)
+- **ISS-04**: POST /api/books - Crear libro (@Imamtz0104)
+- **ISS-05**: POST /api/loans - Registrar préstamo (@JahirJmnz)
+- **ISS-06**: GET /api/loans - Listar préstamos (@JahirJmnz)
+- **ISS-07**: PATCH /api/loans/:id/return - Devolver libro (@JahirJmnz)
+- **ISS-08**: GET /api/health - Health check avanzado (@Jairhc2)
+- **ISS-09**: Validaciones mejoradas y manejo de errores (@Imamtz0104)
+- **ISS-10**: Documentación completa y pruebas (@JahirJmnz)
 
-### ⏳ PENDIENTES (11 issues)
-- ISS-06: GET /api/books - Listar libros (Antonio)
-- ISS-07: POST /api/books - Crear libro (Antonio)
-- ISS-08: GET /api/books/:id - Obtener libro (Antonio)
-- ISS-09: PUT /api/books/:id - Actualizar libro (Antonio)
-- ISS-10: DELETE /api/books/:id - Eliminar libro (Antonio)
-- ISS-11: POST /api/loans - Registrar préstamo (Jair)
-- ISS-12: GET /api/loans - Listar préstamos (Jair)
-- ISS-13: PATCH /api/loans/:id/return - Devolver libro (Antonio)
-- ISS-14: GET /api/health - Health check avanzado (Imanol)
-- ISS-15: Validaciones mejoradas y manejo de errores (Imanol)
-- ISS-16: Documentación completa y pruebas (Jahir)
+### 📊 Distribución por integrante
+- **Jair**: 3 issues (ISS-01, ISS-02, ISS-08)
+- **Imanol**: 3 issues (ISS-03, ISS-04, ISS-09)
+- **Jahir**: 4 issues (ISS-05, ISS-06, ISS-07, ISS-10)
 
 ## Notas
 - Los PRs deben ir primero a `qa`. Promover a `release` solo lo validado.

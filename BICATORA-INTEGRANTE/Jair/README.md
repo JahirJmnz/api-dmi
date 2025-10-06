@@ -7,15 +7,16 @@
 - Pendiente de inicio. Entorno del repositorio listo para clonar.
 
 ## Asignaciones
-- ISS-11: POST /api/loans (registrar préstamo) - **PENDIENTE**
-- ISS-12: GET /api/loans (listar préstamos) - **PENDIENTE**
+- ISS-01: GET /api/users (listar usuarios) - **PENDIENTE**
+- ISS-02: POST /api/users (crear usuario) - **PENDIENTE**
+- ISS-08: GET /api/health (health check avanzado) - **PENDIENTE**
 
 ## Próximos pasos
-1. Clonar el repo y crear rama: `feature/jair/ISS-11-registrar-prestamo`.
-2. Implementar `POST /api/loans` para registrar préstamos.
+1. Clonar el repo y crear rama: `feature/jair/ISS-01-listar-usuarios`.
+2. Implementar `GET /api/users` usando `userDb.getAllUsers()`.
 3. Probar con `curl` y documentar en el PR.
 4. Abrir PR hacia `qa` y solicitar revisión.
-5. Implementar `GET /api/loans` para listar préstamos (ISS-12).
+5. Continuar con ISS-02 y ISS-08.
 
 ## Notas
 - Seguir convención de commits: `feat(users): listar usuarios #01`.
