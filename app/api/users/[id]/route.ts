@@ -1,22 +1,32 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/app/lib/db';
+import { userDb } from '@/app/lib/db';
 
 // GET /api/users/[id] - Obtener usuario por ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
-    const user = db.getUserById(id);
-
+    const { id } = await params;
+    
+    // Validar formato UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'ID de usuario inválido' },
+        { status: 400 }
+      );
+    }
+    
+    const user = userDb.getUserById(id);
+    
     if (!user) {
       return NextResponse.json(
         { error: 'Usuario no encontrado' },
         { status: 404 }
       );
     }
-
+    
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
     console.error('Error al obtener usuario:', error);
@@ -30,63 +40,90 @@ export async function GET(
 // PUT /api/users/[id] - Actualizar usuario
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
-    const { name, email, age } = body;
-
-    // Verificar si el usuario existe
-    const existingUser = db.getUserById(id);
+    
+    // Validar formato UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'ID de usuario inválido' },
+        { status: 400 }
+      );
+    }
+    
+    // Verificar que el usuario existe
+    const existingUser = userDb.getUserById(id);
     if (!existingUser) {
       return NextResponse.json(
         { error: 'Usuario no encontrado' },
         { status: 404 }
       );
     }
-
-    // Validaciones si se proporcionan los campos
-    if (email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
+    
+    // Validar campos si se proporcionan
+    if (body.nombre !== undefined) {
+      if (!body.nombre || body.nombre.length < 2) {
         return NextResponse.json(
-          { error: 'Formato de email inválido' },
+          { error: 'El nombre debe tener al menos 2 caracteres' },
           { status: 400 }
         );
       }
-
-      // Verificar si el email ya existe (excluyendo el usuario actual)
-      if (db.emailExists(email, id)) {
+    }
+    
+    if (body.email !== undefined) {
+      // Validar formato de email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(body.email)) {
         return NextResponse.json(
-          { error: 'El email ya está registrado' },
+          { error: 'El formato del email no es válido' },
+          { status: 400 }
+        );
+      }
+      
+      // Validar que el email no exista en otro usuario
+      if (userDb.emailExists(body.email, id)) {
+        return NextResponse.json(
+          { error: 'El email ya está registrado por otro usuario' },
           { status: 409 }
         );
       }
     }
-
-    if (age !== undefined) {
-      if (typeof age !== 'number' || age < 1 || age > 120) {
-        return NextResponse.json(
-          { error: 'La edad debe ser un número entre 1 y 120' },
-          { status: 400 }
-        );
-      }
+    
+    // Preparar datos para actualización
+    const updateData: any = {};
+    if (body.nombre !== undefined) {
+      updateData.nombre = body.nombre.trim();
     }
-
-    if (name !== undefined && (!name || name.trim().length < 2)) {
+    if (body.email !== undefined) {
+      updateData.email = body.email.toLowerCase().trim();
+    }
+    
+    // Actualizar usuario
+    const updatedUser = userDb.updateUser(id, updateData);
+    
+    if (!updatedUser) {
       return NextResponse.json(
-        { error: 'El nombre debe tener al menos 2 caracteres' },
-        { status: 400 }
+        { error: 'Error al actualizar el usuario' },
+        { status: 500 }
       );
     }
-
-    // Actualizar usuario
-    const updatedUser = db.updateUser(id, { name, email, age });
     
     return NextResponse.json(updatedUser, { status: 200 });
   } catch (error) {
     console.error('Error al actualizar usuario:', error);
+    
+    // Si es error de JSON parsing
+    if (error instanceof SyntaxError) {
+      return NextResponse.json(
+        { error: 'Formato JSON inválido' },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(
       { error: 'Error interno del servidor' },
       { status: 500 }
@@ -97,24 +134,40 @@ export async function PUT(
 // DELETE /api/users/[id] - Eliminar usuario
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { id } = params;
+    const { id } = await params;
     
-    const deleted = db.deleteUser(id);
+    // Validar formato UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(id)) {
+      return NextResponse.json(
+        { error: 'ID de usuario inválido' },
+        { status: 400 }
+      );
+    }
     
-    if (!deleted) {
+    // Verificar que el usuario existe
+    const existingUser = userDb.getUserById(id);
+    if (!existingUser) {
       return NextResponse.json(
         { error: 'Usuario no encontrado' },
         { status: 404 }
       );
     }
-
-    return NextResponse.json(
-      { message: 'Usuario eliminado exitosamente' },
-      { status: 200 }
-    );
+    
+    // Eliminar usuario
+    const deleted = userDb.deleteUser(id);
+    
+    if (!deleted) {
+      return NextResponse.json(
+        { error: 'Error al eliminar el usuario' },
+        { status: 500 }
+      );
+    }
+    
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error('Error al eliminar usuario:', error);
     return NextResponse.json(
