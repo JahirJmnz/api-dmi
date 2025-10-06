@@ -23,11 +23,10 @@
 - Configuración base (`package.json`, `tsconfig.json`, `eslint.config.mjs`, `next.config.ts`).
 
 ## Pendientes personales (siguientes)
+- ✅ **COMPLETADO**: ISS-01 - API Usuarios CRUD Completo
 - Revisar PRs de compañeros y hacer merge a `qa`.
 - Seleccionar 1-2 features para promover a `release`.
-- Trabajar en:
-  - ISS-01: API Usuarios - CRUD Completo
-  - Coordinación general del equipo.
+- Coordinación general del equipo.
 
 ## Tareas y estado
 - [x] [COMPLETADO] Publicar ramas remotas: `qa` y `release` (push inicial) - **Evidencia**: `git push origin qa release` exitoso
@@ -43,12 +42,15 @@
 - [x] [COMPLETADO] ISS-09: Validaciones y errores comunes (400/404/409) - **Evidencia**: Validaciones implementadas en todos los endpoints
 - [x] [COMPLETADO] ISS-10: Documentación de pruebas (README + `curl`) - **Evidencia**: README actualizado con ejemplos curl
 - [x] [COMPLETADO] ISS-12: Logging simple por request - **Evidencia**: Middleware implementado y funcionando
+- [x] [COMPLETADO] ISS-01: API Usuarios CRUD Completo - **Evidencia**: [PR #35](https://github.com/JahirJmnz/api-dmi/pull/35) hacia qa, 7/7 tests pasando
 
 ## Issues creados en GitHub (4 total)
 
-### ⏳ PENDIENTES (4 issues) - CRUD Completos asignados equitativamente
-- **ISS-01**: API Usuarios - CRUD Completo (@JahirJmnz)
-  - GET, POST, GET/:id, PUT/:id, DELETE/:id
+### ✅ COMPLETADOS (1 issue)
+- **ISS-01**: API Usuarios - CRUD Completo (@JahirJmnz) - [PR #35](https://github.com/JahirJmnz/api-dmi/pull/35)
+  - GET, POST, GET/:id, PUT/:id, DELETE/:id ✅
+
+### ⏳ PENDIENTES (3 issues) - CRUD Completos asignados equitativamente
 - **ISS-02**: API Libros - CRUD Completo (@Imamtz0104)
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 - **ISS-03**: API Préstamos - CRUD Completo (@Jairhc2)
@@ -57,10 +59,10 @@
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 
 ### 📊 Distribución por integrante
-- **Jahir**: 1 issue (ISS-01 - API Usuarios completa)
-- **Imanol**: 1 issue (ISS-02 - API Libros completa)
-- **Jair**: 1 issue (ISS-03 - API Préstamos completa)
-- **Antonio**: 1 issue (ISS-04 - API Categorías completa)
+- **Jahir**: 1 issue ✅ (ISS-01 - API Usuarios completa)
+- **Imanol**: 1 issue ⏳ (ISS-02 - API Libros completa)
+- **Jair**: 1 issue ⏳ (ISS-03 - API Préstamos completa)
+- **Antonio**: 1 issue ⏳ (ISS-04 - API Categorías completa)
 
 ### 🧪 Tests automatizados
 - Script `test-api.js` creado para validación automática
