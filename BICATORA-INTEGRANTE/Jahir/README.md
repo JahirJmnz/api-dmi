@@ -26,7 +26,7 @@
 - Revisar PRs de compañeros y hacer merge a `qa`.
 - Seleccionar 1-2 features para promover a `release`.
 - Trabajar en:
-  - ISS-03: API Préstamos - CRUD Completo
+  - ISS-01: API Usuarios - CRUD Completo
   - ISS-04: API Categorías - CRUD Completo
   - Coordinación general del equipo.
 
@@ -48,19 +48,19 @@
 ## Issues creados en GitHub (4 total)
 
 ### ⏳ PENDIENTES (4 issues) - CRUD Completos asignados equitativamente
-- **ISS-01**: API Usuarios - CRUD Completo (@Jairhc2)
+- **ISS-01**: API Usuarios - CRUD Completo (@JahirJmnz)
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 - **ISS-02**: API Libros - CRUD Completo (@Imamtz0104)
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
-- **ISS-03**: API Préstamos - CRUD Completo (@JahirJmnz)
+- **ISS-03**: API Préstamos - CRUD Completo (@Jairhc2)
   - GET, POST, GET/:id, PATCH/:id/return, DELETE/:id
 - **ISS-04**: API Categorías - CRUD Completo (@JahirJmnz)
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 
 ### 📊 Distribución por integrante
-- **Jair**: 1 issue (ISS-01 - API Usuarios completa)
+- **Jahir**: 2 issues (ISS-01, ISS-04 - APIs Usuarios y Categorías completas)
 - **Imanol**: 1 issue (ISS-02 - API Libros completa)
-- **Jahir**: 2 issues (ISS-03, ISS-04 - APIs Préstamos y Categorías completas)
+- **Jair**: 1 issue (ISS-03 - API Préstamos completa)
 
 ### 🧪 Tests automatizados
 - Script `test-api.js` creado para validación automática
