@@ -26,10 +26,8 @@
 - Revisar PRs de compañeros y hacer merge a `qa`.
 - Seleccionar 1-2 features para promover a `release`.
 - Trabajar en:
-  - ISS-05: POST /api/loans (registrar préstamo)
-  - ISS-06: GET /api/loans (listar préstamos)
-  - ISS-07: PATCH /api/loans/:id/return (devolver libro)
-  - ISS-10: Documentación completa y pruebas
+  - ISS-03: API Préstamos - CRUD Completo
+  - ISS-04: API Categorías - CRUD Completo
   - Coordinación general del equipo.
 
 ## Tareas y estado
@@ -47,24 +45,27 @@
 - [x] [COMPLETADO] ISS-10: Documentación de pruebas (README + `curl`) - **Evidencia**: README actualizado con ejemplos curl
 - [x] [COMPLETADO] ISS-12: Logging simple por request - **Evidencia**: Middleware implementado y funcionando
 
-## Issues creados en GitHub (10 total)
+## Issues creados en GitHub (4 total)
 
-### ⏳ PENDIENTES (10 issues) - Asignados correctamente
-- **ISS-01**: GET /api/users - Listar usuarios (@Jairhc2)
-- **ISS-02**: POST /api/users - Crear usuario (@Jairhc2)
-- **ISS-03**: GET /api/books - Listar libros (@Imamtz0104)
-- **ISS-04**: POST /api/books - Crear libro (@Imamtz0104)
-- **ISS-05**: POST /api/loans - Registrar préstamo (@JahirJmnz)
-- **ISS-06**: GET /api/loans - Listar préstamos (@JahirJmnz)
-- **ISS-07**: PATCH /api/loans/:id/return - Devolver libro (@JahirJmnz)
-- **ISS-08**: GET /api/health - Health check avanzado (@Jairhc2)
-- **ISS-09**: Validaciones mejoradas y manejo de errores (@Imamtz0104)
-- **ISS-10**: Documentación completa y pruebas (@JahirJmnz)
+### ⏳ PENDIENTES (4 issues) - CRUD Completos asignados equitativamente
+- **ISS-01**: API Usuarios - CRUD Completo (@Jairhc2)
+  - GET, POST, GET/:id, PUT/:id, DELETE/:id
+- **ISS-02**: API Libros - CRUD Completo (@Imamtz0104)
+  - GET, POST, GET/:id, PUT/:id, DELETE/:id
+- **ISS-03**: API Préstamos - CRUD Completo (@JahirJmnz)
+  - GET, POST, GET/:id, PATCH/:id/return, DELETE/:id
+- **ISS-04**: API Categorías - CRUD Completo (@JahirJmnz)
+  - GET, POST, GET/:id, PUT/:id, DELETE/:id
 
 ### 📊 Distribución por integrante
-- **Jair**: 3 issues (ISS-01, ISS-02, ISS-08)
-- **Imanol**: 3 issues (ISS-03, ISS-04, ISS-09)
-- **Jahir**: 4 issues (ISS-05, ISS-06, ISS-07, ISS-10)
+- **Jair**: 1 issue (ISS-01 - API Usuarios completa)
+- **Imanol**: 1 issue (ISS-02 - API Libros completa)
+- **Jahir**: 2 issues (ISS-03, ISS-04 - APIs Préstamos y Categorías completas)
+
+### 🧪 Tests automatizados
+- Script `test-api.js` creado para validación automática
+- Cada integrante debe ejecutar `npm test` antes de hacer PR
+- Tests validan funcionalidad completa de cada API
 
 ## Notas
 - Los PRs deben ir primero a `qa`. Promover a `release` solo lo validado.

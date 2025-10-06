@@ -23,6 +23,13 @@ export interface Loan {
   fechaDevolucion: string | null;
 }
 
+export interface Category {
+  id: string;
+  nombre: string;
+  descripcion: string;
+  activa: boolean;
+}
+
 // Almacenamiento en memoria
 let users: User[] = [
   {
@@ -55,6 +62,21 @@ let books: Book[] = [
 ];
 
 let loans: Loan[] = [];
+
+let categories: Category[] = [
+  {
+    id: '550e8400-e29b-41d4-a716-446655440005',
+    nombre: 'Ficción',
+    descripcion: 'Libros de ficción y novelas',
+    activa: true
+  },
+  {
+    id: '550e8400-e29b-41d4-a716-446655440006',
+    nombre: 'No Ficción',
+    descripcion: 'Libros de no ficción y académicos',
+    activa: true
+  }
+];
 
 // Funciones CRUD para usuarios
 export const userDb = {
@@ -165,5 +187,45 @@ export const loanDb = {
 
   getActiveLoans: (): Loan[] => {
     return loans.filter(loan => loan.fechaDevolucion === null);
+  }
+};
+
+// Funciones CRUD para categorías
+export const categoryDb = {
+  getAllCategories: (): Category[] => categories,
+  
+  getCategoryById: (id: string): Category | undefined => {
+    return categories.find(category => category.id === id);
+  },
+
+  createCategory: (categoryData: Omit<Category, 'id'>): Category => {
+    const newCategory: Category = {
+      id: randomUUID(),
+      ...categoryData
+    };
+    categories.push(newCategory);
+    return newCategory;
+  },
+
+  updateCategory: (id: string, categoryData: Partial<Omit<Category, 'id'>>): Category | null => {
+    const categoryIndex = categories.findIndex(category => category.id === id);
+    if (categoryIndex === -1) return null;
+    
+    categories[categoryIndex] = { ...categories[categoryIndex], ...categoryData };
+    return categories[categoryIndex];
+  },
+
+  deleteCategory: (id: string): boolean => {
+    const categoryIndex = categories.findIndex(category => category.id === id);
+    if (categoryIndex === -1) return false;
+    
+    categories.splice(categoryIndex, 1);
+    return true;
+  },
+
+  nameExists: (nombre: string, excludeId?: string): boolean => {
+    return categories.some(category => 
+      category.nombre.toLowerCase() === nombre.toLowerCase() && category.id !== excludeId
+    );
   }
 };

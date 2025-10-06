@@ -7,16 +7,15 @@
 - Pendiente de inicio. Entorno del repositorio listo para clonar.
 
 ## Asignaciones
-- ISS-05: POST /api/loans (registrar préstamo) - **PENDIENTE**
-- ISS-06: GET /api/loans (listar préstamos) - **PENDIENTE**
-- ISS-07: PATCH /api/loans/:id/return (devolver libro) - **PENDIENTE**
+- ISS-03: API Préstamos - CRUD Completo - **PENDIENTE**
+  - GET, POST, GET/:id, PATCH/:id/return, DELETE/:id
 
 ## Próximos pasos
-1. Clonar el repo y crear rama: `feature/antonio/ISS-05-registrar-prestamo`.
-2. Implementar `POST /api/loans` para registrar préstamos.
-3. Probar con `curl` y documentar en el PR.
-4. Abrir PR hacia `qa` y solicitar revisión.
-5. Continuar con ISS-06 y ISS-07.
+1. Clonar el repo y crear rama: `feature/antonio/ISS-03-api-prestamos-crud`.
+2. Implementar todos los endpoints de préstamos (GET, POST, GET/:id, PATCH/:id/return, DELETE/:id).
+3. Ejecutar tests automatizados: `npm test`.
+4. Probar con `curl` y documentar en el PR.
+5. Abrir PR hacia `qa` y solicitar revisión.
 
 ## Notas
 - Seguir convención de commits: `feat(users): eliminar usuario #05`.

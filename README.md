@@ -16,16 +16,21 @@ api-dmi/
 ├── app/
 │   ├── api/
 │   │   ├── ping/route.ts         # GET /api/ping
-│   │   ├── health/route.ts       # GET /api/health
 │   │   ├── users/route.ts        # GET, POST /api/users
+│   │   ├── users/[id]/route.ts   # GET, PUT, DELETE /api/users/:id
 │   │   ├── books/route.ts        # GET, POST /api/books
-│   │   └── loans/route.ts        # GET, POST /api/loans
-│   │       └── [id]/return/route.ts  # PATCH /api/loans/:id/return
+│   │   ├── books/[id]/route.ts   # GET, PUT, DELETE /api/books/:id
+│   │   ├── loans/route.ts        # GET, POST /api/loans
+│   │   ├── loans/[id]/route.ts   # GET, DELETE /api/loans/:id
+│   │   ├── loans/[id]/return/route.ts  # PATCH /api/loans/:id/return
+│   │   ├── categories/route.ts   # GET, POST /api/categories
+│   │   └── categories/[id]/route.ts  # GET, PUT, DELETE /api/categories/:id
 │   ├── lib/
 │   │   └── db.ts                 # Módulo de almacenamiento en memoria
 │   └── globals.css
 ├── .github/
 │   └── pull_request_template.md  # Plantilla para PRs
+├── test-api.js                   # Script de tests automatizados
 ├── CONTEXTO-GENERAL-DEL-PROYECTO/
 ├── BICATORA-INTEGRANTE/
 └── README.md
@@ -149,6 +154,27 @@ curl -X GET http://localhost:3000/api/loans
 curl -X PATCH http://localhost:3000/api/loans/LOAN_ID/return
 ```
 
+### 10. Listar Categorías
+- **GET** `/api/categories`
+- **Respuesta**: Array de categorías
+- **Códigos**: 200 (éxito)
+
+```bash
+curl -X GET http://localhost:3000/api/categories
+```
+
+### 11. Crear Categoría
+- **POST** `/api/categories`
+- **Body**: `{ nombre: string, descripcion: string, activa: boolean }`
+- **Respuesta**: Categoría creada
+- **Códigos**: 201 (creado), 400 (datos inválidos), 409 (nombre duplicado)
+
+```bash
+curl -X POST http://localhost:3000/api/categories \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Ciencia Ficción","descripcion":"Libros de ciencia ficción","activa":true}'
+```
+
 ## Desarrollo
 
 ### Instalación
@@ -164,6 +190,16 @@ npm run dev
 ```
 
 La API estará disponible en [http://localhost:3000/api](http://localhost:3000/api)
+
+### Ejecutar tests
+
+```bash
+# Tests automatizados
+npm test
+
+# Tests en modo watch (requiere nodemon)
+npm run test:watch
+```
 
 ### Flujo de trabajo
 
