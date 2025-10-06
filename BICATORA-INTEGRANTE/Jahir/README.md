@@ -27,7 +27,6 @@
 - Seleccionar 1-2 features para promover a `release`.
 - Trabajar en:
   - ISS-01: API Usuarios - CRUD Completo
-  - ISS-04: API Categorías - CRUD Completo
   - Coordinación general del equipo.
 
 ## Tareas y estado
@@ -54,13 +53,14 @@
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 - **ISS-03**: API Préstamos - CRUD Completo (@Jairhc2)
   - GET, POST, GET/:id, PATCH/:id/return, DELETE/:id
-- **ISS-04**: API Categorías - CRUD Completo (@JahirJmnz)
+- **ISS-04**: API Categorías - CRUD Completo (@Antonioh1n)
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 
 ### 📊 Distribución por integrante
-- **Jahir**: 2 issues (ISS-01, ISS-04 - APIs Usuarios y Categorías completas)
+- **Jahir**: 1 issue (ISS-01 - API Usuarios completa)
 - **Imanol**: 1 issue (ISS-02 - API Libros completa)
 - **Jair**: 1 issue (ISS-03 - API Préstamos completa)
+- **Antonio**: 1 issue (ISS-04 - API Categorías completa)
 
 ### 🧪 Tests automatizados
 - Script `test-api.js` creado para validación automática
