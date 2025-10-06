@@ -53,7 +53,7 @@
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 - **ISS-03**: API Préstamos - CRUD Completo (@Jairhc2)
   - GET, POST, GET/:id, PATCH/:id/return, DELETE/:id
-- **ISS-04**: API Categorías - CRUD Completo (@Antonioh1n)
+- **ISS-04**: API Categorías - CRUD Completo (@Antonioh1ni)
   - GET, POST, GET/:id, PUT/:id, DELETE/:id
 
 ### 📊 Distribución por integrante
