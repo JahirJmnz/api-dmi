@@ -82,7 +82,9 @@ curl -X GET http://localhost:3000/api/ping
 curl -X GET http://localhost:3000/api/health
 ```
 
-### 3. Listar Usuarios
+### 3. API Usuarios (CRUD Completo)
+
+#### 3.1 Listar Usuarios
 - **GET** `/api/users`
 - **Respuesta**: Array de usuarios
 - **Códigos**: 200 (éxito)
@@ -91,7 +93,7 @@ curl -X GET http://localhost:3000/api/health
 curl -X GET http://localhost:3000/api/users
 ```
 
-### 4. Crear Usuario
+#### 3.2 Crear Usuario
 - **POST** `/api/users`
 - **Body**: `{ nombre: string, email: string }`
 - **Respuesta**: Usuario creado
@@ -103,7 +105,39 @@ curl -X POST http://localhost:3000/api/users \
   -d '{"nombre":"Juan Pérez","email":"juan@email.com"}'
 ```
 
-### 5. Listar Libros
+#### 3.3 Obtener Usuario por ID
+- **GET** `/api/users/:id`
+- **Respuesta**: Usuario específico
+- **Códigos**: 200 (éxito), 404 (no encontrado)
+
+```bash
+curl -X GET http://localhost:3000/api/users/USER_ID
+```
+
+#### 3.4 Actualizar Usuario
+- **PUT** `/api/users/:id`
+- **Body**: `{ nombre?: string, email?: string }`
+- **Respuesta**: Usuario actualizado
+- **Códigos**: 200 (éxito), 400 (datos inválidos), 404 (no encontrado), 409 (email duplicado)
+
+```bash
+curl -X PUT http://localhost:3000/api/users/USER_ID \
+  -H "Content-Type: application/json" \
+  -d '{"nombre":"Juan Carlos Pérez"}'
+```
+
+#### 3.5 Eliminar Usuario
+- **DELETE** `/api/users/:id`
+- **Respuesta**: Sin contenido
+- **Códigos**: 204 (eliminado), 404 (no encontrado)
+
+```bash
+curl -X DELETE http://localhost:3000/api/users/USER_ID
+```
+
+### 4. API Libros (CRUD Completo)
+
+#### 4.1 Listar Libros
 - **GET** `/api/books`
 - **Respuesta**: Array de libros
 - **Códigos**: 200 (éxito)
@@ -112,7 +146,7 @@ curl -X POST http://localhost:3000/api/users \
 curl -X GET http://localhost:3000/api/books
 ```
 
-### 6. Crear Libro
+#### 4.2 Crear Libro
 - **POST** `/api/books`
 - **Body**: `{ titulo: string, autor: string, isbn: string }`
 - **Respuesta**: Libro creado
@@ -124,7 +158,48 @@ curl -X POST http://localhost:3000/api/books \
   -d '{"titulo":"1984","autor":"George Orwell","isbn":"978-0-452-28423-4"}'
 ```
 
-### 7. Registrar Préstamo
+#### 4.3 Obtener Libro por ID
+- **GET** `/api/books/:id`
+- **Respuesta**: Libro específico
+- **Códigos**: 200 (éxito), 404 (no encontrado)
+
+```bash
+curl -X GET http://localhost:3000/api/books/BOOK_ID
+```
+
+#### 4.4 Actualizar Libro
+- **PUT** `/api/books/:id`
+- **Body**: `{ titulo?: string, autor?: string, isbn?: string, disponible?: boolean }`
+- **Respuesta**: Libro actualizado
+- **Códigos**: 200 (éxito), 400 (datos inválidos), 404 (no encontrado), 409 (ISBN duplicado)
+
+```bash
+curl -X PUT http://localhost:3000/api/books/BOOK_ID \
+  -H "Content-Type: application/json" \
+  -d '{"disponible":false}'
+```
+
+#### 4.5 Eliminar Libro
+- **DELETE** `/api/books/:id`
+- **Respuesta**: Sin contenido
+- **Códigos**: 204 (eliminado), 404 (no encontrado)
+
+```bash
+curl -X DELETE http://localhost:3000/api/books/BOOK_ID
+```
+
+### 5. API Préstamos (CRUD Completo)
+
+#### 5.1 Listar Préstamos
+- **GET** `/api/loans`
+- **Respuesta**: Array de préstamos
+- **Códigos**: 200 (éxito)
+
+```bash
+curl -X GET http://localhost:3000/api/loans
+```
+
+#### 5.2 Registrar Préstamo
 - **POST** `/api/loans`
 - **Body**: `{ usuarioId: string, libroId: string }`
 - **Respuesta**: Préstamo creado
@@ -136,16 +211,16 @@ curl -X POST http://localhost:3000/api/loans \
   -d '{"usuarioId":"550e8400-e29b-41d4-a716-446655440001","libroId":"550e8400-e29b-41d4-a716-446655440003"}'
 ```
 
-### 8. Listar Préstamos
-- **GET** `/api/loans`
-- **Respuesta**: Array de préstamos
-- **Códigos**: 200 (éxito)
+#### 5.3 Obtener Préstamo por ID
+- **GET** `/api/loans/:id`
+- **Respuesta**: Préstamo específico
+- **Códigos**: 200 (éxito), 404 (no encontrado)
 
 ```bash
-curl -X GET http://localhost:3000/api/loans
+curl -X GET http://localhost:3000/api/loans/LOAN_ID
 ```
 
-### 9. Devolver Libro
+#### 5.4 Devolver Libro
 - **PATCH** `/api/loans/:id/return`
 - **Respuesta**: Préstamo actualizado
 - **Códigos**: 200 (éxito), 404 (préstamo no encontrado)
@@ -154,7 +229,18 @@ curl -X GET http://localhost:3000/api/loans
 curl -X PATCH http://localhost:3000/api/loans/LOAN_ID/return
 ```
 
-### 10. Listar Categorías
+#### 5.5 Cancelar Préstamo
+- **DELETE** `/api/loans/:id`
+- **Respuesta**: Sin contenido
+- **Códigos**: 204 (eliminado), 404 (no encontrado)
+
+```bash
+curl -X DELETE http://localhost:3000/api/loans/LOAN_ID
+```
+
+### 6. API Categorías (CRUD Completo)
+
+#### 6.1 Listar Categorías
 - **GET** `/api/categories`
 - **Respuesta**: Array de categorías
 - **Códigos**: 200 (éxito)
@@ -163,7 +249,7 @@ curl -X PATCH http://localhost:3000/api/loans/LOAN_ID/return
 curl -X GET http://localhost:3000/api/categories
 ```
 
-### 11. Crear Categoría
+#### 6.2 Crear Categoría
 - **POST** `/api/categories`
 - **Body**: `{ nombre: string, descripcion: string, activa: boolean }`
 - **Respuesta**: Categoría creada
@@ -174,6 +260,52 @@ curl -X POST http://localhost:3000/api/categories \
   -H "Content-Type: application/json" \
   -d '{"nombre":"Ciencia Ficción","descripcion":"Libros de ciencia ficción","activa":true}'
 ```
+
+#### 6.3 Obtener Categoría por ID
+- **GET** `/api/categories/:id`
+- **Respuesta**: Categoría específica
+- **Códigos**: 200 (éxito), 404 (no encontrado)
+
+```bash
+curl -X GET http://localhost:3000/api/categories/CATEGORY_ID
+```
+
+#### 6.4 Actualizar Categoría
+- **PUT** `/api/categories/:id`
+- **Body**: `{ nombre?: string, descripcion?: string, activa?: boolean }`
+- **Respuesta**: Categoría actualizada
+- **Códigos**: 200 (éxito), 400 (datos inválidos), 404 (no encontrado), 409 (nombre duplicado)
+
+```bash
+curl -X PUT http://localhost:3000/api/categories/CATEGORY_ID \
+  -H "Content-Type: application/json" \
+  -d '{"activa":false}'
+```
+
+#### 6.5 Eliminar Categoría
+- **DELETE** `/api/categories/:id`
+- **Respuesta**: Sin contenido
+- **Códigos**: 204 (eliminado), 404 (no encontrado)
+
+```bash
+curl -X DELETE http://localhost:3000/api/categories/CATEGORY_ID
+```
+
+## Resumen de APIs
+
+### 🎯 **4 APIs CRUD Completas**
+
+| API | Asignado a | Endpoints | Funcionalidad |
+|-----|------------|-----------|---------------|
+| **Usuarios** | @JahirJmnz | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de usuarios |
+| **Libros** | @Imamtz0104 | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de libros |
+| **Préstamos** | @Jairhc2 | GET, POST, GET/:id, PATCH/:id/return, DELETE/:id | Gestión completa de préstamos |
+| **Categorías** | @Antonioh1ni | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de categorías |
+
+### 🧪 **Tests Automatizados**
+- Script `test-api.js` para validación automática
+- Comando `npm test` para ejecutar tests
+- Validación completa de funcionalidad CRUD
 
 ## Desarrollo
 
