@@ -33,7 +33,7 @@
 - [x] [COMPLETADO] Publicar ramas remotas: `qa` y `release` (push inicial) - **Evidencia**: `git push origin qa release` exitoso
 - [x] [COMPLETADO] Proteger ramas `main` y `release` en GitHub (PR obligatorio + 1 review) - **Evidencia**: Protección configurada manualmente en GitHub
 - [x] [COMPLETADO] Reestructurar proyecto para API de biblioteca - **Evidencia**: Eliminada API de usuarios, creada estructura para biblioteca
-- [x] [COMPLETADO] Crear 10 issues correctamente asignados con tests - **Evidencia**: Issues #21-30 creados y asignados a cada integrante
+- [x] [COMPLETADO] Crear 10 issues correctamente asignados con tests - **Evidencia**: Issues y asignados a cada integrante
 - [x] [COMPLETADO] Alinear asignaciones entre guía y bitácoras individuales - **Evidencia**: Bitácoras actualizadas con nuevas asignaciones
 - [x] [COMPLETADO] Actualizar `README.md` del proyecto con endpoints y ejemplos `curl` - **Evidencia**: README completo con todos los endpoints y comandos curl
 - [x] [COMPLETADO] Añadir `.github/pull_request_template.md` con checklist de pruebas/review - **Evidencia**: Archivo creado en `.github/pull_request_template.md`
