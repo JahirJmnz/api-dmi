@@ -10,10 +10,10 @@ export async function GET(
     const { id } = await params;
     
     // Validar formato UUID
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    if (!uuidRegex.test(id)) {
+    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!UUID_REGEX.test(id)) {
       return NextResponse.json(
-        { error: 'ID de libro inválido' },
+        { message: 'El ID proporcionado no es un UUID válido.' },
         { status: 400 }
       );
     }
@@ -22,7 +22,7 @@ export async function GET(
     
     if (!book) {
       return NextResponse.json(
-        { error: 'Libro no encontrado' },
+        { message: 'Libro no encontrado' },
         { status: 404 }
       );
     }
@@ -31,7 +31,7 @@ export async function GET(
   } catch (error) {
     console.error('Error al obtener libro:', error);
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { message: 'Error interno del servidor' },
       { status: 500 }
     );
   }
@@ -47,10 +47,10 @@ export async function PUT(
     const body = await request.json();
     
     // Validar formato UUID
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    if (!uuidRegex.test(id)) {
+    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!UUID_REGEX.test(id)) {
       return NextResponse.json(
-        { error: 'ID de libro inválido' },
+        { message: 'El ID proporcionado no es un UUID válido.' },
         { status: 400 }
       );
     }
@@ -59,7 +59,7 @@ export async function PUT(
     const existingBook = bookDb.getBookById(id);
     if (!existingBook) {
       return NextResponse.json(
-        { error: 'Libro no encontrado' },
+        { message: 'Libro no encontrado' },
         { status: 404 }
       );
     }
@@ -68,7 +68,7 @@ export async function PUT(
     if (body.titulo !== undefined) {
       if (!body.titulo || body.titulo.length < 2) {
         return NextResponse.json(
-          { error: 'El título debe tener al menos 2 caracteres' },
+          { message: 'El título debe tener al menos 2 caracteres' },
           { status: 400 }
         );
       }
@@ -77,7 +77,7 @@ export async function PUT(
     if (body.autor !== undefined) {
       if (!body.autor || body.autor.length < 2) {
         return NextResponse.json(
-          { error: 'El autor debe tener al menos 2 caracteres' },
+          { message: 'El autor debe tener al menos 2 caracteres' },
           { status: 400 }
         );
       }
@@ -87,7 +87,7 @@ export async function PUT(
       // Validar formato de ISBN
       if (body.isbn.length < 10) {
         return NextResponse.json(
-          { error: 'El ISBN debe tener al menos 10 caracteres' },
+          { message: 'El ISBN debe tener al menos 10 caracteres' },
           { status: 400 }
         );
       }
@@ -95,7 +95,7 @@ export async function PUT(
       // Validar que el ISBN no exista en otro libro
       if (bookDb.isbnExists(body.isbn, id)) {
         return NextResponse.json(
-          { error: 'El ISBN ya está registrado por otro libro' },
+          { message: 'El ISBN ya está registrado por otro libro' },
           { status: 409 }
         );
       }
@@ -121,7 +121,7 @@ export async function PUT(
     
     if (!updatedBook) {
       return NextResponse.json(
-        { error: 'Error al actualizar el libro' },
+        { message: 'Error al actualizar el libro' },
         { status: 500 }
       );
     }
@@ -133,13 +133,13 @@ export async function PUT(
     // Si es error de JSON parsing
     if (error instanceof SyntaxError) {
       return NextResponse.json(
-        { error: 'Formato JSON inválido' },
+        { message: 'Cuerpo de la solicitud JSON mal formado.' },
         { status: 400 }
       );
     }
     
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { message: 'Error interno del servidor' },
       { status: 500 }
     );
   }
@@ -154,10 +154,10 @@ export async function DELETE(
     const { id } = await params;
     
     // Validar formato UUID
-    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-    if (!uuidRegex.test(id)) {
+    const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!UUID_REGEX.test(id)) {
       return NextResponse.json(
-        { error: 'ID de libro inválido' },
+        { message: 'El ID proporcionado no es un UUID válido.' },
         { status: 400 }
       );
     }
@@ -166,7 +166,7 @@ export async function DELETE(
     const existingBook = bookDb.getBookById(id);
     if (!existingBook) {
       return NextResponse.json(
-        { error: 'Libro no encontrado' },
+        { message: 'Libro no encontrado' },
         { status: 404 }
       );
     }
@@ -176,7 +176,7 @@ export async function DELETE(
     
     if (!deleted) {
       return NextResponse.json(
-        { error: 'Error al eliminar el libro' },
+        { message: 'Error al eliminar el libro' },
         { status: 500 }
       );
     }
@@ -185,7 +185,7 @@ export async function DELETE(
   } catch (error) {
     console.error('Error al eliminar libro:', error);
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { message: 'Error interno del servidor' },
       { status: 500 }
     );
   }

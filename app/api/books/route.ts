@@ -10,7 +10,7 @@ export async function GET() {
   } catch (error) {
     console.error('Error al obtener libros:', error);
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { message: 'Error interno del servidor' },
       { status: 500 }
     );
   }
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     // Validar campos requeridos
     if (!body.titulo || !body.autor || !body.isbn) {
       return NextResponse.json(
-        { error: 'Los campos titulo, autor e isbn son requeridos' },
+        { message: 'Faltan campos requeridos: titulo, autor, isbn' },
         { status: 400 }
       );
     }
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     // Validar longitud del título
     if (body.titulo.length < 2) {
       return NextResponse.json(
-        { error: 'El título debe tener al menos 2 caracteres' },
+        { message: 'El título debe tener al menos 2 caracteres' },
         { status: 400 }
       );
     }
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
     // Validar longitud del autor
     if (body.autor.length < 2) {
       return NextResponse.json(
-        { error: 'El autor debe tener al menos 2 caracteres' },
+        { message: 'El autor debe tener al menos 2 caracteres' },
         { status: 400 }
       );
     }
@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
     // Validar formato de ISBN (básico)
     if (body.isbn.length < 10) {
       return NextResponse.json(
-        { error: 'El ISBN debe tener al menos 10 caracteres' },
+        { message: 'El ISBN debe tener al menos 10 caracteres' },
         { status: 400 }
       );
     }
@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     // Validar que el ISBN no exista
     if (bookDb.isbnExists(body.isbn)) {
       return NextResponse.json(
-        { error: 'El ISBN ya está registrado' },
+        { message: 'El ISBN ya está registrado' },
         { status: 409 }
       );
     }
@@ -76,13 +76,13 @@ export async function POST(request: NextRequest) {
     // Si es error de JSON parsing
     if (error instanceof SyntaxError) {
       return NextResponse.json(
-        { error: 'Formato JSON inválido' },
+        { message: 'Cuerpo de la solicitud JSON mal formado.' },
         { status: 400 }
       );
     }
     
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { message: 'Error interno del servidor' },
       { status: 500 }
     );
   }
