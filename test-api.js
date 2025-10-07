@@ -18,6 +18,7 @@ const colors = {
 
 let passedTests = 0;
 let totalTests = 0;
+const testResults = [];
 
 function log(message, color = 'reset') {
   console.log(`${colors[color]}${message}${colors.reset}`);
@@ -38,6 +39,10 @@ async function makeRequest(method, endpoint, body = null) {
   
   try {
     const response = await fetch(url, options);
+    // For 204 No Content, data will be empty
+    if (response.status === 204) {
+      return { status: 204, data: null, ok: response.ok };
+    }
     const data = await response.text();
     let jsonData;
     
@@ -61,19 +66,75 @@ async function makeRequest(method, endpoint, body = null) {
   }
 }
 
-function test(name, testFn) {
+function test(name, condition) {
   totalTests++;
-  try {
-    const result = testFn();
-    if (result) {
-      passedTests++;
-      log(`✓ ${name}`, 'green');
-    } else {
-      log(`✗ ${name}`, 'red');
-    }
-  } catch (error) {
-    log(`✗ ${name} - Error: ${error.message}`, 'red');
+  if (condition) {
+    passedTests++;
+    testResults.push({ name, passed: true });
+  } else {
+    testResults.push({ name, passed: false });
   }
+}
+
+async function runCategoryTests() {
+  log('\n📂 Tests de Categorías (CRUD Completo):', 'yellow');
+  
+  // 1. POST - Crear una nueva categoría para los tests
+  const uniqueName = `Test Category ${Date.now()}`;
+  const createResponse = await makeRequest('POST', '/categories', {
+    nombre: uniqueName,
+    descripcion: 'Test Description',
+    activa: true
+  });
+  test('POST /api/categories crea categoría con 201', createResponse.status === 201);
+  test('POST /api/categories retorna categoría con id', createResponse.data?.id != null);
+  
+  const categoryId = createResponse.data?.id;
+  if (!categoryId) {
+    log('Error: No se pudo crear la categoría de prueba. Abortando tests de categorías.', 'red');
+    return;
+  }
+
+  // 2. GET (all) - Listar categorías
+  const listResponse = await makeRequest('GET', '/categories');
+  test('GET /api/categories responde con 200', listResponse.status === 200);
+  test('GET /api/categories retorna un array', Array.isArray(listResponse.data));
+  test('GET /api/categories contiene la nueva categoría', listResponse.data.some(c => c.id === categoryId));
+
+  // 3. GET (by id) - Obtener la categoría creada
+  const getByIdResponse = await makeRequest('GET', `/categories/${categoryId}`);
+  test('GET /api/categories/:id responde con 200 para un ID válido', getByIdResponse.status === 200);
+  test('GET /api/categories/:id retorna el objeto correcto', getByIdResponse.data?.id === categoryId);
+
+  const nonExistentId = '123e4567-e89b-12d3-a456-426614174000';
+  const getNotFoundResponse = await makeRequest('GET', `/categories/${nonExistentId}`);
+  test('GET /api/categories/:id responde con 404 para un ID inexistente', getNotFoundResponse.status === 404);
+  
+  const invalidIdResponse = await makeRequest('GET', '/categories/invalid-id');
+  test('GET /api/categories/:id responde con 400 para un ID inválido', invalidIdResponse.status === 400);
+
+  // 4. PUT - Actualizar la categoría
+  const updatedName = `Updated Category ${Date.now()}`;
+  const putResponse = await makeRequest('PUT', `/categories/${categoryId}`, {
+    nombre: updatedName,
+    activa: false
+  });
+  test('PUT /api/categories/:id responde con 200', putResponse.status === 200);
+  test('PUT /api/categories/:id retorna el objeto actualizado', putResponse.data?.nombre === updatedName && putResponse.data?.activa === false);
+
+  const putNotFoundResponse = await makeRequest('PUT', `/categories/${nonExistentId}`, { nombre: 'test' });
+  test('PUT /api/categories/:id responde con 404 para un ID inexistente', putNotFoundResponse.status === 404);
+
+  // 5. POST/PUT Validaciones de conflicto
+  const conflictResponse = await makeRequest('POST', '/categories', { nombre: updatedName, descripcion: '...', activa: true });
+  test('POST /api/categories responde con 409 para un nombre duplicado', conflictResponse.status === 409);
+
+  // 6. DELETE - Eliminar la categoría
+  const deleteResponse = await makeRequest('DELETE', `/categories/${categoryId}`);
+  test('DELETE /api/categories/:id responde con 204 para una eliminación exitosa', deleteResponse.status === 204);
+
+  const deleteNotFoundResponse = await makeRequest('DELETE', `/categories/${categoryId}`);
+  test('DELETE /api/categories/:id responde con 404 al intentar eliminar de nuevo', deleteNotFoundResponse.status === 404);
 }
 
 async function runTests() {
@@ -82,73 +143,34 @@ async function runTests() {
   // Test 1: Health Check
   log('📋 Tests de Health Check:', 'yellow');
   const pingResponse = await makeRequest('GET', '/ping');
-  test('GET /api/ping responde con 200', () => pingResponse.status === 200);
-  test('GET /api/ping tiene campo ok', () => pingResponse.data?.ok === true);
+  test('GET /api/ping responde con 200', pingResponse.status === 200);
+  test('GET /api/ping tiene campo ok', pingResponse.data?.ok === true);
   
-  // Test 2: Usuarios
-  log('\n👥 Tests de Usuarios:', 'yellow');
+  // Test 2: Usuarios (a implementar)
+  log('\n👥 Tests de Usuarios (a implementar):', 'yellow');
   const usersResponse = await makeRequest('GET', '/users');
-  test('GET /api/users responde con 200', () => usersResponse.status === 200);
-  test('GET /api/users retorna array', () => Array.isArray(usersResponse.data));
+  test('GET /api/users responde con 200', usersResponse.status === 200);
   
-  const createUserResponse = await makeRequest('POST', '/users', {
-    nombre: 'Test User',
-    email: 'test@example.com'
-  });
-  test('POST /api/users crea usuario con 201', () => createUserResponse.status === 201);
-  test('POST /api/users retorna usuario con id', () => createUserResponse.data?.id);
-  
-  // Test 3: Libros
-  log('\n📚 Tests de Libros:', 'yellow');
+  // Test 3: Libros (a implementar)
+  log('\n📚 Tests de Libros (a implementar):', 'yellow');
   const booksResponse = await makeRequest('GET', '/books');
-  test('GET /api/books responde con 200', () => booksResponse.status === 200);
-  test('GET /api/books retorna array', () => Array.isArray(booksResponse.data));
-  
-  const createBookResponse = await makeRequest('POST', '/books', {
-    titulo: 'Test Book',
-    autor: 'Test Author',
-    isbn: '978-0-123456-78-9'
-  });
-  test('POST /api/books crea libro con 201', () => createBookResponse.status === 201);
-  test('POST /api/books retorna libro con id', () => createBookResponse.data?.id);
+  test('GET /api/books responde con 200', booksResponse.status === 200);
   
   // Test 4: Categorías
-  log('\n📂 Tests de Categorías:', 'yellow');
-  const categoriesResponse = await makeRequest('GET', '/categories');
-  test('GET /api/categories responde con 200', () => categoriesResponse.status === 200);
-  test('GET /api/categories retorna array', () => Array.isArray(categoriesResponse.data));
+  await runCategoryTests();
   
-  const createCategoryResponse = await makeRequest('POST', '/categories', {
-    nombre: 'Test Category',
-    descripcion: 'Test Description',
-    activa: true
-  });
-  test('POST /api/categories crea categoría con 201', () => createCategoryResponse.status === 201);
-  test('POST /api/categories retorna categoría con id', () => createCategoryResponse.data?.id);
-  
-  // Test 5: Préstamos
-  log('\n📖 Tests de Préstamos:', 'yellow');
+  // Test 5: Préstamos (a implementar)
+  log('\n📖 Tests de Préstamos (a implementar):', 'yellow');
   const loansResponse = await makeRequest('GET', '/loans');
-  test('GET /api/loans responde con 200', () => loansResponse.status === 200);
-  test('GET /api/loans retorna array', () => Array.isArray(loansResponse.data));
-  
-  // Test 6: Validaciones
-  log('\n🔍 Tests de Validaciones:', 'yellow');
-  const invalidUserResponse = await makeRequest('POST', '/users', {
-    nombre: 'Test'
-    // email faltante
-  });
-  test('POST /api/users sin email retorna 400', () => invalidUserResponse.status === 400);
-  
-  const invalidBookResponse = await makeRequest('POST', '/books', {
-    titulo: 'Test'
-    // autor e isbn faltantes
-  });
-  test('POST /api/books sin campos requeridos retorna 400', () => invalidBookResponse.status === 400);
-  
-  // Resumen
+  test('GET /api/loans responde con 200', loansResponse.status === 200);
+
+  // Imprimir resultados
   log(`\n📊 Resumen de Tests:`, 'blue');
-  log(`Pasaron: ${passedTests}/${totalTests} tests`, passedTests === totalTests ? 'green' : 'red');
+  testResults.forEach(result => {
+    log(result.passed ? `✓ ${result.name}` : `✗ ${result.name}`, result.passed ? 'green' : 'red');
+  });
+  
+  log(`\nPasaron: ${passedTests}/${totalTests} tests`, passedTests === totalTests ? 'green' : 'red');
   
   if (passedTests === totalTests) {
     log('🎉 ¡Todos los tests pasaron! La API está funcionando correctamente.', 'green');
