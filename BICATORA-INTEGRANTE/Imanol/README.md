@@ -1,22 +1,20 @@
-# Bitácora - Imanol martinez 
+# Bitácora - Imanol Martinez
 
-- Fecha: 2025-10-04
+- Fecha: 2025-10-06
 - Rol: Desarrollador Backend
 
 ## Actividades realizadas
-- Pendiente de inicio. Entorno del repositorio listo para clonar.
+- Implementación del CRUD de Libros (GET, POST, GET/:id, PUT/:id, DELETE/:id).
+- Pruebas locales exitosas con `curl` y `npm test`.
+- Publicación de la rama `feature/imanol/ISS-02-api-libros-crud`.
+- Creación del Pull Request hacia `qa`.
 
 ## Asignaciones
-- ISS-02: API Libros - CRUD Completo - **PENDIENTE**
-  - GET, POST, GET/:id, PUT/:id, DELETE/:id
+- ISS-02: API Libros - CRUD Completo - **EN REVISIÓN**
 
-## Próximos pasos
-1. Clonar el repo y crear rama: `feature/imanol/ISS-02-api-libros-crud`.
-2. Implementar todos los endpoints de libros (GET, POST, GET/:id, PUT/:id, DELETE/:id).
-3. Ejecutar tests automatizados: `npm test`.
-4. Documentar y probar con `curl` en el PR.
-5. Abrir PR hacia `qa` y solicitar revisión.
+## Evidencias
+- Capturas del funcionamiento del CRUD.
+- Link al PR en Azure DevOps/GitHub.
 
 ## Notas
-- Seguir convención de commits: `feat(users): crear usuario #03`.
-- Los PRs siempre van a `qa` primero, enlazando el issue.
+- Se respetaron convenciones de commits y nomenclatura de ramas.
