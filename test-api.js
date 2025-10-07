@@ -98,19 +98,49 @@ async function runTests() {
   test('POST /api/users crea usuario con 201', () => createUserResponse.status === 201);
   test('POST /api/users retorna usuario con id', () => createUserResponse.data?.id);
   
-  // Test 3: Libros
-  log('\n📚 Tests de Libros:', 'yellow');
+  // Test 3: Libros - CRUD Completo
+  log('\n📚 Tests de Libros (CRUD Completo):', 'yellow');
+  
+  // GET /api/books
   const booksResponse = await makeRequest('GET', '/books');
   test('GET /api/books responde con 200', () => booksResponse.status === 200);
   test('GET /api/books retorna array', () => Array.isArray(booksResponse.data));
   
+  // POST /api/books
   const createBookResponse = await makeRequest('POST', '/books', {
-    titulo: 'Test Book',
-    autor: 'Test Author',
+    titulo: 'Test Book CRUD',
+    autor: 'Test Author CRUD',
     isbn: '978-0-123456-78-9'
   });
   test('POST /api/books crea libro con 201', () => createBookResponse.status === 201);
   test('POST /api/books retorna libro con id', () => createBookResponse.data?.id);
+  test('POST /api/books retorna libro con disponible: true', () => createBookResponse.data?.disponible === true);
+  
+  const bookId = createBookResponse.data?.id;
+  
+  // GET /api/books/[id]
+  if (bookId) {
+    const getBookResponse = await makeRequest('GET', `/books/${bookId}`);
+    test('GET /api/books/[id] responde con 200', () => getBookResponse.status === 200);
+    test('GET /api/books/[id] retorna libro correcto', () => getBookResponse.data?.id === bookId);
+    
+    // PUT /api/books/[id]
+    const updateBookResponse = await makeRequest('PUT', `/books/${bookId}`, {
+      titulo: 'Test Book CRUD - Actualizado',
+      disponible: false
+    });
+    test('PUT /api/books/[id] actualiza libro con 200', () => updateBookResponse.status === 200);
+    test('PUT /api/books/[id] retorna libro actualizado', () => updateBookResponse.data?.titulo === 'Test Book CRUD - Actualizado');
+    test('PUT /api/books/[id] actualiza disponible', () => updateBookResponse.data?.disponible === false);
+    
+    // DELETE /api/books/[id]
+    const deleteBookResponse = await makeRequest('DELETE', `/books/${bookId}`);
+    test('DELETE /api/books/[id] elimina libro con 204', () => deleteBookResponse.status === 204);
+    
+    // Verificar eliminación
+    const verifyDeleteResponse = await makeRequest('GET', `/books/${bookId}`);
+    test('GET /api/books/[id] después de DELETE retorna 404', () => verifyDeleteResponse.status === 404);
+  }
   
   // Test 4: Categorías
   log('\n📂 Tests de Categorías:', 'yellow');
@@ -145,6 +175,20 @@ async function runTests() {
     // autor e isbn faltantes
   });
   test('POST /api/books sin campos requeridos retorna 400', () => invalidBookResponse.status === 400);
+  
+  // Tests específicos de validaciones para libros
+  const duplicateIsbnResponse = await makeRequest('POST', '/books', {
+    titulo: 'Duplicate ISBN Test',
+    autor: 'Test Author',
+    isbn: '978-84-376-0494-7' // ISBN que ya existe en db.ts
+  });
+  test('POST /api/books con ISBN duplicado retorna 409', () => duplicateIsbnResponse.status === 409);
+  
+  const invalidUuidResponse = await makeRequest('GET', '/books/invalid-uuid');
+  test('GET /api/books/[id] con UUID inválido retorna 400', () => invalidUuidResponse.status === 400);
+  
+  const nonExistentBookResponse = await makeRequest('GET', '/books/550e8400-e29b-41d4-a716-446655440999');
+  test('GET /api/books/[id] con libro inexistente retorna 404', () => nonExistentBookResponse.status === 404);
   
   // Resumen
   log(`\n📊 Resumen de Tests:`, 'blue');

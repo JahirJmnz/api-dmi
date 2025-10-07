@@ -3,10 +3,12 @@
 ## Resuelve #32
 
 **Resumen**
-- Implementa CRUD completo para la API de libros
-- Corrige problemas de duplicación de código del PR #40
-- Usa bookDb centralizado de db.ts (no duplicación)
-- Formato de respuesta consistente con otros endpoints
+- ✅ Implementa CRUD completo para la API de libros (GET, POST, GET/:id, PUT/:id, DELETE/:id)
+- ✅ Usa bookDb centralizado de db.ts (sin duplicación de código)
+- ✅ Formato de respuesta consistente con otros endpoints del proyecto
+- ✅ Validaciones UUID mejoradas siguiendo patrón del equipo
+- ✅ Tests automatizados completos en test-api.js
+- ✅ Documentación completa con comandos curl y ejemplos
 
 **Cómo probar**
 
