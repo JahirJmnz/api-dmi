@@ -284,18 +284,12 @@ curl -X DELETE http://localhost:3000/api/categories/CATEGORY_ID
 
 ### 🎯 **4 APIs CRUD Completas**
 
-| API | Asignado a | Estado | Endpoints | Funcionalidad |
-|-----|------------|--------|-----------|---------------|
-| **Usuarios** | @JahirJmnz | ✅ **COMPLETADO** | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de usuarios |
-| **Libros** | @Imamtz0104 | ⏳ En desarrollo | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de libros |
-| **Préstamos** | @Jairhc2 | ⏳ En desarrollo | GET, POST, GET/:id, PATCH/:id/return, DELETE/:id | Gestión completa de préstamos |
-| **Categorías** | @Antonioh1ni | ⏳ En desarrollo | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de categorías |
-
-### 📊 **Progreso del Proyecto**
-- ✅ **API Usuarios**: Completada - [PR #35](https://github.com/JahirJmnz/api-dmi/pull/35) hacia qa
-- ⏳ **API Libros**: Pendiente - Imanol
-- ⏳ **API Préstamos**: Pendiente - Jair  
-- ⏳ **API Categorías**: Pendiente - Antonio
+| API | Asignado a | Endpoints | Funcionalidad |
+|-----|------------|-----------|---------------|
+| **Usuarios** | @JahirJmnz | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de usuarios |
+| **Libros** | @Imamtz0104 | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de libros |
+| **Préstamos** | @Jairhc2 | GET, POST, GET/:id, PATCH/:id/return, DELETE/:id | Gestión completa de préstamos |
+| **Categorías** | @Antonioh1ni | GET, POST, GET/:id, PUT/:id, DELETE/:id | Gestión completa de categorías |
 
 ### 🧪 **Tests Automatizados**
 - Script `test-api.js` para validación automática
