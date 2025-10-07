@@ -1,4 +1,4 @@
-# Bitácora - Imanol Hernández
+# Bitácora - Imanol martinez 
 
 - Fecha: 2025-10-04
 - Rol: Desarrollador Backend
